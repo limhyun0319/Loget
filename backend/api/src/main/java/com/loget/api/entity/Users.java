@@ -2,19 +2,23 @@ package com.loget.api.entity;
 
 import jakarta.persistence.*;
 import jakarta.websocket.OnMessage;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Users {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     public long userId;
 
     @Column(nullable = false, length = 100)
-    private String id;
+    private String loginId;
 
     @Column(nullable = false, length = 255)
     private String password;
