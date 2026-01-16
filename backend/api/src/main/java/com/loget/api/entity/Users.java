@@ -1,11 +1,13 @@
 package com.loget.api.entity;
 
+import com.loget.api.entity.Exercise;
+import com.loget.api.entity.Fasting;
+import com.loget.api.entity.Meal;
+import com.loget.api.entity.Weight;
 import jakarta.persistence.*;
-import jakarta.websocket.OnMessage;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.swing.*;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,18 +15,21 @@ import java.util.List;
 @Getter
 @Setter
 public class Users {
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    public long userId;
 
-    @Column(nullable = false, length = 100)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "userId")
+    private Long userId;
+
+    @Column(name = "id", nullable = false, length = 100, unique = true)
     private String loginId;
 
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column (length = 50)
+    @Column(length = 50)
     private String name;
+
     private Integer height;
 
     @Column(precision = 5, scale = 2)
@@ -36,14 +41,12 @@ public class Users {
     @OneToMany(mappedBy = "user")
     private List<Meal> meals;
 
-    @OneToMany (mappedBy = "user")
-    private  List<Weight> weights;
+    @OneToMany(mappedBy = "user")
+    private List<Weight> weights;
 
     @OneToMany(mappedBy = "user")
     private List<Exercise> exercises;
 
-    @OneToMany (mappedBy = "user")
+    @OneToMany(mappedBy = "user")
     private List<Fasting> fastings;
-
 }
-

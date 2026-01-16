@@ -29,4 +29,5 @@ public class AuthController {
     public LoginResponse login(@RequestBody LoginRequest req) {
         return authService.login(req);
     }
+
 }
