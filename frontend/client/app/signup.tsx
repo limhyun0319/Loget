@@ -15,6 +15,7 @@ import {
     View,
     Alert
 } from 'react-native';
+import axios from 'axios';
 
 
 
@@ -29,7 +30,9 @@ export default function SignupScreen(){
         targetWeight: '',
     });
 
-    const handleSignup=()=>{
+    const API_URL = 'https://lubricatory-les-unsoftly.ngrok-free.dev';
+
+    const handleSignup= async () => {
         const { id, password, name, height, startWeight, targetWeight } = form;
 
         if (!id.trim() || !password.trim() || !name.trim() || !height.trim() || !startWeight.trim()){
@@ -44,11 +47,35 @@ export default function SignupScreen(){
 
         console.log('회원가입 정보:',signupData);
 
-        Alert.alert(
-            "Welcom",
-            "프아 가입을 환영합니다 *^^*",
-            [{text: "확인", onPress: ()=>router.replace('/')}]
-        );
+        try {
+            // 1. 서버에 post 요청
+            const response = await axios.post(`${API_URL}/auth/signup`, signupData);
+
+            // 2. 결과 처리
+            if (response.status === 200 || response.status === 201){
+                const userData = response.data;
+
+                console.log('서버가 준 회원 정보:', userData);
+
+                Alert.alert(
+                    "가입 성공!",
+                    `${userData.name}님, 환영합니다 *^^*`,
+                    [{text: "확인", onPress: ()=>router.replace('/')}]
+                );
+            }
+        } catch (error:any) {
+            if (error.response) {
+        // 서버가 응답은 준 경우 (400, 500 등)
+                console.log('서버 에러 데이터:', error.response.data);
+            } else if (error.request) {
+        // 서버에 요청은 보냈으나 대답을 못 받은 경우 (네트워크 문제)
+                console.log('요청 전송 실패 (서버가 응답하지 않음)');
+            } else {
+        // 아예 요청 설정부터 잘못된 경우
+                console.log('에러 메시지:', error.message);
+            }
+            Alert.alert("가입 실패", "터미널의 로그를 확인해주세요!");
+        }
     };
 
     return (
