@@ -3,12 +3,14 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { AuthProvider } from '@/context/AuthContext';
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   return (
-    // 시스템 설정에 따라 다크/라이트 테마 적용
+    <AuthProvider>
+    {/*시스템 설정에 따라 다크/라이트 테마 적용*/}
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         {/* 모든 화면에서 헤더를 기본적으로 숨김 (필요할 때만 켬) */}
@@ -21,5 +23,6 @@ export default function RootLayout() {
       </Stack>
       <StatusBar style="auto" />
     </ThemeProvider>
+    </AuthProvider>
   );
 }

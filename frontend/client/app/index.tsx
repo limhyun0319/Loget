@@ -1,7 +1,7 @@
 import { Ionicons } from '@expo/vector-icons';
 import Entypo from '@expo/vector-icons/Entypo';
-import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
+import {useRouter} from 'expo-router';
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -14,19 +14,20 @@ import {
   View,
   Alert
 } from 'react-native';
+import { useLogin } from '@/hooks/useLogin'; 
 
 
 
 export default function LoginScreen() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const router = useRouter();
 
-  const handleLogin=()=>{
-    if (!id.trim() || !password.trim()){
-      return;
-    }
-    router.replace('/(tabs)');
+  const router = useRouter();
+  
+  const {login, isLoading} = useLogin();
+
+  const handleLogin = () => {
+    login(id,password);
   };
 
   return (
