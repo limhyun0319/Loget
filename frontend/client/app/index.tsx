@@ -1,4 +1,5 @@
 import { Ionicons } from '@expo/vector-icons';
+import AuthButton from '@/components/AuthButton';
 import Entypo from '@expo/vector-icons/Entypo';
 import React, { useState } from 'react';
 import {useRouter} from 'expo-router';
@@ -68,9 +69,11 @@ export default function LoginScreen() {
             </View>
           </View>
 
-          <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-            <Text style={styles.loginButtonText}>로그인</Text>
-          </TouchableOpacity>
+          <AuthButton 
+                title="로그인" 
+                onPress={handleLogin} 
+                isLoading={isLoading} 
+          />
 
           <View style={styles.footer}>
             <Text style={styles.footerText}>계정이 없으신가요? </Text>

@@ -5,7 +5,7 @@
 
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
+const tintColorLight = '#85b52a';
 const tintColorDark = '#fff';
 
 export const Colors = {
@@ -16,6 +16,11 @@ export const Colors = {
     icon: '#687076',
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
+    // 🔥 Loget 전용 색상 추가
+    primary: '#151718',   // 팀 NH 갈색
+    secondary: '#85b52a', // 팀 NH 연두색
+    inputBg: '#F5F7F6',
+    border: '#E8E8E8',
   },
   dark: {
     text: '#ECEDEE',
@@ -24,6 +29,11 @@ export const Colors = {
     icon: '#9BA1A6',
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
+    // 🔥 다크모드용 색상 (필요시 조정)
+    primary: '#6d1f1f', 
+    secondary: '#85b52a',
+    inputBg: '#2A2A2A',
+    border: '#3A3A3A',
   },
 };
 

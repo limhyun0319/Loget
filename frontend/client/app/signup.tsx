@@ -1,4 +1,5 @@
 import { useSignup } from '@/hooks/useSignup';
+import AuthButton from '@/components/AuthButton';
 import {Ionicons} from '@expo/vector-icons';
 import {useRouter} from 'expo-router';
 import React, {useState} from 'react';
@@ -102,9 +103,11 @@ export default function SignupScreen(){
                         />
                     </View>
 
-                    <TouchableOpacity onPress={handleSignup} style={styles.signupButton}>
-                        <Text style={styles.signupButtonText}>가입 완료</Text>
-                    </TouchableOpacity>
+                    <AuthButton 
+                        title="가입 완료" 
+                        onPress={handleSignup} 
+                        isLoading={isLoading} 
+                    />
                 </ScrollView>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
@@ -156,11 +159,11 @@ const styles = StyleSheet.create({
         borderColor: '#E8E8E8'
     },
     row: {flexDirection: 'row', justifyContent:'space-between'},
-    signupButton: {
+    /*signupButton: {
         backgroundColor: '#4f1616',
         padding: 18,
         borderRadius: 12,
         alignItems: 'center'
     },
-    signupButtonText:{color:'#85b52a', fontSize: 18, fontWeight:'bold'}
+    signupButtonText:{color:'#85b52a', fontSize: 18, fontWeight:'bold'}*/
 });
