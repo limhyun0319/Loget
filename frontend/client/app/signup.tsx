@@ -30,8 +30,8 @@ export default function SignupScreen(){
         targetWeight: '',
     });
 
-    const API_URL = 'https://unconfining-moshe-untribally.ngrok-free.dev';
-    
+    const API_URL = 'https://lubricatory-les-unsoftly.ngrok-free.dev';
+
     const handleSignup= async () => {
         const { id, password, name, height, startWeight, targetWeight } = form;
 
