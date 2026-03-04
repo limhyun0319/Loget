@@ -20,7 +20,7 @@ public class DailyLog {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private User user;
+    private Users user;
 
     @Column(nullable = false)
     private LocalDate logDate;

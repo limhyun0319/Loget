@@ -22,7 +22,7 @@ public class AuthService {
         }
         //엔티티 생성
         Users user = new Users();
-        user.setLoginId(req.id());
+        user.setId(req.id());
         user.setPassword(req.password());
         user.setName(req.name());
         user.setHeight(req.height());
@@ -33,7 +33,7 @@ public class AuthService {
         //실제 리턴값
         return new UserResponse(
                 savedUser.getUserId(),
-                savedUser.getLoginId(),
+                savedUser.getId(),
                 savedUser.getName(),
                 savedUser.getHeight(),
                 savedUser.getStartWeight(),
@@ -53,7 +53,7 @@ public class AuthService {
         //로그인 성공 시 유저 정보 응답 dto 생성
         UserResponse userResponse = new UserResponse(
                 user.getUserId(),
-                user.getLoginId(),
+                user.getId(),
                 user.getName(),
                 user.getHeight(),
                 user.getStartWeight(),
