@@ -16,4 +16,8 @@ public class Fasting {
 
     private LocalDateTime startTime;
     private LocalDateTime endTime;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "logId")
+    private DailyLog dailyLog;
 }

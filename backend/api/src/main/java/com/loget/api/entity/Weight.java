@@ -11,12 +11,12 @@ public class Weight {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long weightId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private Users user;
-
     @Column(precision = 5, scale = 2)
     private BigDecimal currentWeight;
 
     private LocalDate logDate;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "logId", unique = true)
+    private DailyLog dailyLog;
 }

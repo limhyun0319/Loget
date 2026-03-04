@@ -9,15 +9,17 @@ import java.time.LocalDateTime;
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long key;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private Users user;
+    private Long exerciseId;
 
     @Column(length = 100)
     private String exerciseName;
+
     private Integer exerciseMinutes;
+
     private LocalDateTime loggedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "logId")
+    private DailyLog dailyLog;
 
 }

@@ -11,12 +11,8 @@ public class Meal {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long mealId;
 
-    @ManyToOne (fetch = FetchType.LAZY)
-    @JoinColumn (name = "userId")
-    private Users user;
-
-    @Enumerated(EnumType.STRING)
-    private MealType mealType; // 아침, 점심, 저녁, 간식
+    @Enumerated(EnumType.STRING) // ENUM을 문자열로 DB에 저장
+    private MealType mealType;
 
     private String photoUrl;
 
@@ -24,5 +20,9 @@ public class Meal {
     private String memo;
 
     private LocalDateTime loggedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "logId")
+    private DailyLog dailyLog;
 
 }

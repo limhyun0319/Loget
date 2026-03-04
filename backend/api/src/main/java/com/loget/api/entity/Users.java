@@ -15,14 +15,12 @@ import java.util.List;
 @Getter
 @Setter
 public class Users {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
     private Long userId;
 
-    @Column(name = "id", nullable = false, length = 100, unique = true)
-    private String loginId;
+    @Column(nullable = false, unique = true, length = 100)
+    private String id;
 
     @Column(nullable = false, length = 255)
     private String password;
@@ -37,16 +35,4 @@ public class Users {
 
     @Column(precision = 5, scale = 2)
     private BigDecimal startWeight;
-
-    @OneToMany(mappedBy = "user")
-    private List<Meal> meals;
-
-    @OneToMany(mappedBy = "user")
-    private List<Weight> weights;
-
-    @OneToMany(mappedBy = "user")
-    private List<Exercise> exercises;
-
-    @OneToMany(mappedBy = "user")
-    private List<Fasting> fastings;
 }
