@@ -17,7 +17,7 @@ public class AuthService {
     //회원가입
     public UserResponse signup (SignupRequest req) {
         //중복 아이디 체크
-        if (userRepository.existsByLoginId(req.id())) {
+        if (userRepository.existsById(req.id())) {
             throw new IllegalArgumentException("이미 존재하는 아이디입니다.");
         }
         //엔티티 생성
@@ -44,7 +44,7 @@ public class AuthService {
     //로그인
     public LoginResponse login (LoginRequest req) {
         //아이디 확인
-        Users user = userRepository.findByLoginId(req.id())
+        Users user = userRepository.findById(req.id())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 아이디입니다."));
         //비밀번호 확인
         if (!user.getPassword().equals(req.password())) {
