@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#85b52a', // 연두색 배경
+    backgroundColor: '#fff', // 연두색 배경
     borderRadius: 25,
     padding: 15,
     marginHorizontal: 20,
@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
   mealCard: {
     width: '48%', // 2열 격자
     height: 140,
-    backgroundColor: '#4f1616', // 갈색 카드
+    backgroundColor: '#36bc9b80',
     borderRadius: 15,
     marginBottom: '4%',
     justifyContent: 'center',
@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     left: 12,
-    color: '#FFF',
+    color: '#f5f5f5',
     fontSize: 14,
     fontWeight: 'bold',
     zIndex: 1, // 텍스트가 이미지 위로 오게

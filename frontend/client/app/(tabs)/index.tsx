@@ -1,4 +1,5 @@
-import {ScrollView, View, Text, StyleSheet} from 'react-native';
+import {ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {useRouter} from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import MainHeader from '@/components/main/MainHeader';
 import WeightStatusCard from '@/components/main/WeightStatusCard';
@@ -8,7 +9,7 @@ import ExerciseRecordBar from '@/components/main/ExerciseRecordBar';
 
 export default function MainScreen(){
     const {user} = useAuth();
-
+    const router = useRouter();
 
     return (
         <View style={styles.container}>
@@ -17,7 +18,9 @@ export default function MainScreen(){
             <ScrollView 
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}>
-                <WeightStatusCard />
+                <TouchableOpacity onPress={() => router.push('../weightInput')}>
+                    <WeightStatusCard />
+                </TouchableOpacity>
                 <FastingTimer />
                 {/* 섹션 타이틀을 하나 넣어주면 더 깔끔합니다 */}
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 20, marginTop: 25 }}>식단 기록</Text>
@@ -29,7 +32,7 @@ export default function MainScreen(){
 }
 
 const styles = StyleSheet.create({
-    container: {flex: 1, backgroundColor: '#F9FBFA'},
+    container: {flex: 1, backgroundColor: '#f5f5f5'},
     scrollContent: { 
         // 하단에 넉넉한 여백을 줘서 마지막 아이템이 잘 보이게 합니다.
         paddingBottom: 40, 

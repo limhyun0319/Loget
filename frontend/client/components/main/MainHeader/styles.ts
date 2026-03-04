@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'flex-end',
     paddingBottom: 15,
     paddingHorizontal: 20,
-    backgroundColor: '#4f1616'
+    backgroundColor: '#36bc9b'
   },
   titleContainer: {
     flexDirection: 'column',

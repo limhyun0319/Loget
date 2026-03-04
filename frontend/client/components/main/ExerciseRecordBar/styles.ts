@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
     marginBottom: 15,
   },
   bar: {
-    backgroundColor: '#85b52a', // 연두색 배경
+    backgroundColor: '#fff', // 연두색 배경
     height: 60,
     borderRadius: 15,
     flexDirection: 'row',
