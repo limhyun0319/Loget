@@ -1,4 +1,5 @@
-import {ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {ActivityIndicator, ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useRouter} from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import MainHeader from '@/components/main/MainHeader';
@@ -6,16 +7,49 @@ import WeightStatusCard from '@/components/main/WeightStatusCard';
 import FastingTimer from '@/components/main/FastingTimer';
 import MealRecordGrid from '@/components/main/MealRecordGrid';
 import ExerciseRecordBar from '@/components/main/ExerciseRecordBar';
+import {getMainData} from '@/api/main';
 
 export default function MainScreen(){
     const {user} = useAuth();
     const router = useRouter();
 
+    const [selectedDate, setSelectedDate] = useState(new Date()); //기본값은 오늘
+    const [mainData, setMainData] = useState(null);
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        loadMainData();
+    }, [selectedDate]);
+
+    const loadMainData = async () => {
+        setLoading(false);
+        try {
+            const dateString = selectedDate.toISOString().split('T')[0];
+            console.log("main api 호출: ", user.userId, dateString);
+            const result = await getMainData(user.userId, dateString);
+            setMainData(result);
+        } catch (error) {
+            console.error('메인 데이터 로드 실패:', error);
+            throw error;
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <MainHeader />
+            <MainHeader
+                selectedDate={selectedDate}
+                onDateChange={setSelectedDate}
+            />
             
-            <ScrollView 
+            {loading ? (
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 50 }}>
+                    {/* size는 'large' 또는 'small'을 쓸 수 있어요 */}
+                    <ActivityIndicator size="large" color="#36bc9b" />
+                </View>
+            ) : (
+                <ScrollView 
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}>
                 <TouchableOpacity onPress={() => router.push('../weightInput')}>
@@ -26,7 +60,9 @@ export default function MainScreen(){
                 <Text style={{ fontSize: 18, fontWeight: 'bold', marginLeft: 20, marginTop: 25 }}>식단 기록</Text>
                 <MealRecordGrid />
                 <ExerciseRecordBar />
-            </ScrollView>
+                </ScrollView>
+            )}
+            
         </View>
     )
 }
