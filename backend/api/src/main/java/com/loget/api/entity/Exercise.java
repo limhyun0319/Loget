@@ -1,11 +1,14 @@
 package com.loget.api.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.lang.module.FindException;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+
 public class Exercise {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

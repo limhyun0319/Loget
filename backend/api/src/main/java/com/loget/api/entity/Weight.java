@@ -1,11 +1,14 @@
 package com.loget.api.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+
 public class Weight {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
