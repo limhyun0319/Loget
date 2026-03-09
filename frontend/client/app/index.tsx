@@ -40,14 +40,14 @@ export default function LoginScreen() {
         <View style={styles.inner}>
 
           <View style={styles.logoContainer}>
-            <Entypo name="new-message" size={70} color="#4f1616" />
-            <Text style={styles.title}>Loget</Text>
-            <Text style={styles.subtitle}>Team NH 넘예쁘네</Text>
+            {/*<Entypo name="new-message" size={70} color="#36bc9b" />*/}
+            <Text style={styles.title}>LOGET</Text>
+            {/*<Text style={styles.subtitle}>팀</Text>*/}
           </View>
 
           <View style={styles.inputContainer}>
             <View style={styles.inputWrapper}>
-              <Ionicons name="person-outline" size={20} color="#4f1616" style={styles.icon} />
+              <Ionicons name="person-outline" size={20} color="#36bc9b" style={styles.icon} />
               <TextInput
                 style={styles.input} 
                 placeholder="아이디" 
@@ -58,7 +58,7 @@ export default function LoginScreen() {
             </View>
 
             <View style={styles.inputWrapper}>
-              <Ionicons name="lock-closed-outline" size={20} color="#4f1616" style={styles.icon} />
+              <Ionicons name="lock-closed-outline" size={20} color="#36bc9b" style={styles.icon} />
               <TextInput 
                 style={styles.input} 
                 placeholder="비밀번호" 
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F9FBFA' },
   inner: { flex: 1, justifyContent: 'center', paddingHorizontal: 30 },
   logoContainer: { alignItems: 'center', marginBottom: 50 },
-  title: { fontSize: 36, fontWeight: '900', color: '#85b52a', marginTop: 10, letterSpacing: 2 },
+  title: { fontSize: 36, fontWeight: '900', color: '#36bc9b', marginTop: 10, letterSpacing: 2 },
   subtitle: { fontSize: 14, color: '#777', marginTop: 5 },
   inputContainer: { marginBottom: 20 },
   inputWrapper: {
@@ -103,11 +103,11 @@ const styles = StyleSheet.create({
   icon: { marginRight: 10 },
   input: { flex: 1, fontSize: 16, color: '#333' },
   loginButton: {
-    backgroundColor: '#4f1616', height: 55, borderRadius: 12,
+    backgroundColor: '#36bc9b', height: 55, borderRadius: 12,
     justifyContent: 'center', alignItems: 'center', marginTop: 10,
   },
-  loginButtonText: { color: '#85b52a', fontSize: 18, fontWeight: 'bold' },
+  loginButtonText: { color: '#fff', fontSize: 18, fontWeight: 'bold' },
   footer: { flexDirection: 'row', justifyContent: 'center', marginTop: 25 },
   footerText: { color: '#888', fontSize: 14 },
-  signupText: { color: '#4f1616', fontSize: 14, fontWeight: 'bold' },
+  signupText: { color: '#36bc9b', fontSize: 14, fontWeight: 'bold' },
 });

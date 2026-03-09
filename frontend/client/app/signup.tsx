@@ -96,7 +96,7 @@ export default function SignupScreen(){
                             />
                         </View>
                         <InputField
-                            label="목표 몸무게 (kg) - 선택"
+                            label="목표 몸무게 (kg)"
                             keyboardType='numeric'
                             value={form.targetWeight}
                             onChange={(text) => setForm({...form, targetWeight: text})}
