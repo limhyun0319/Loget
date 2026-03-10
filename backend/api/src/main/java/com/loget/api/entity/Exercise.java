@@ -2,12 +2,14 @@ package com.loget.api.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.lang.module.FindException;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 
 public class Exercise {
     @Id
