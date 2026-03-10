@@ -20,4 +20,6 @@ public interface WeightRepository extends JpaRepository<Weight, Long> {
     Optional<Weight> findLatestWeightBeforeDate(
             @Param("userId") Long userId,
             @Param("date") LocalDate date);
+
+    Optional<Weight> findFirstByDailyLog_User_UserIdAndLogDateLessThanEqualOrderByLogDateDesc(Long userId, LocalDate date);
 }

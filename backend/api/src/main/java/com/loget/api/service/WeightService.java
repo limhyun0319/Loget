@@ -32,9 +32,7 @@ public class WeightService {
         LocalDate date = LocalDate.parse(dateStr);
 
         // 해당 날짜 이전의 가장 최근 몸무게 찾기
-        Weight weight = weightRepository
-                .findLatestWeightBeforeDate(userId, date)
-                .orElse(null);
+        Weight weight = weightRepository.findFirstByDailyLog_User_UserIdAndLogDateLessThanEqualOrderByLogDateDesc(userId, date).orElse(null);
 
         if (weight == null) {
             //기록이 없으면 null 반환
