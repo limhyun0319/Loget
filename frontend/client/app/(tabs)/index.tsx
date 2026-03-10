@@ -22,11 +22,12 @@ export default function MainScreen(){
     }, [selectedDate]);
 
     const loadMainData = async () => {
-        setLoading(false);
+        setLoading(true);
         try {
             const dateString = selectedDate.toISOString().split('T')[0];
             console.log("main api 호출: ", user.userId, dateString);
             const result = await getMainData(user.userId, dateString);
+            console.log("받은 main data: ", result);
             setMainData(result);
         } catch (error) {
             console.error('메인 데이터 로드 실패:', error);
