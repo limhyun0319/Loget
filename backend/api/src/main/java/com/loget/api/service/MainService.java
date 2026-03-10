@@ -32,10 +32,13 @@ public class MainService {
         LocalDate date = LocalDate.parse(dateStr);
 
         // 1. 해당 유저와 날짜로 일지(DailyLog) 찾기
-        // (주의: 레포지토리에 이 메서드가 있어야 합니다!)
-        DailyLog dailyLog = dailyLogRepository.findByUser_UserIdAndLogDate(userId, date)
-                .orElseThrow(() -> new IllegalArgumentException("해당 날짜의 기록이 없습니다."));
+        java.util.Optional<DailyLog> dailyLogOpt = dailyLogRepository.findByUser_UserIdAndLogDate(userId, date);
 
+        if (dailyLogOpt.isEmpty()) {
+            return new MainResponseDto(null, null, java.util.Collections.emptyList(), null);
+        }
+
+        DailyLog dailyLog = dailyLogOpt.get();
         Long logId = dailyLog.getLogId();
 
         // 2. 일지 번호(logId)로 몸무게 찾기
