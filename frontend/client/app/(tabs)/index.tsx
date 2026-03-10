@@ -25,7 +25,6 @@ export default function MainScreen(){
         setLoading(true);
         try {
             const dateString = selectedDate.toISOString().split('T')[0];
-            console.log("main api 호출: ", user.userId, dateString);
             const result = await getMainData(user.userId, dateString);
             console.log("받은 main data: ", result);
             setMainData(result);
@@ -54,7 +53,9 @@ export default function MainScreen(){
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}>
                 <TouchableOpacity onPress={() => router.push('../weightInput')}>
-                    <WeightStatusCard />
+                    <WeightStatusCard 
+                        weight={mainData?.currentWeight}
+                    />
                 </TouchableOpacity>
                 <FastingTimer />
                 {/* 섹션 타이틀을 하나 넣어주면 더 깔끔합니다 */}

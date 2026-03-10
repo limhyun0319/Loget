@@ -3,11 +3,11 @@ import { View, Text } from 'react-native';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
 
-export default function WeightStatusCard() {
+export default function WeightStatusCard({weight}) {
   const { user } = useAuth();
 
   // 아직 데이터가 없을 때를 대비한 기본값 설정
-  const currentWeight = user?.startWeight || 0;
+  const currentWeight = weight || user?.startWeight;
   const target = user?.targetWeight || 0;
   // 목표 체중과의 차이나 이전 기록과의 차이를 계산할 수 있습니다 (현재는 예시)
   const weightDiff = currentWeight - target; 
@@ -17,7 +17,7 @@ export default function WeightStatusCard() {
       <Text style={styles.label}>오늘의 몸무게</Text>
       
       <View style={styles.weightContainer}>
-        <Text style={styles.weightText}>{currentWeight}</Text>
+        <Text style={styles.weightText}>{currentWeight.toFixed(1)}</Text>
         <Text style={styles.unitText}>kg</Text>
       </View>
 
