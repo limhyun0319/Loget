@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import {ActivityIndicator, ScrollView, View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {useRouter} from 'expo-router';
+import { useIsFocused } from '@react-navigation/native';
 import { useAuth } from '@/context/AuthContext';
+import { useDate } from '@/context/DateContext';
 import MainHeader from '@/components/main/MainHeader';
 import WeightStatusCard from '@/components/main/WeightStatusCard';
 import FastingTimer from '@/components/main/FastingTimer';
@@ -10,16 +12,20 @@ import ExerciseRecordBar from '@/components/main/ExerciseRecordBar';
 import {getMainData} from '@/api/main';
 
 export default function MainScreen(){
+    const isFocused = useIsFocused();
+
     const {user} = useAuth();
     const router = useRouter();
 
-    const [selectedDate, setSelectedDate] = useState(new Date()); //기본값은 오늘
+    const {selectedDate, setSelectedDate} = useDate();
     const [mainData, setMainData] = useState(null);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        loadMainData();
-    }, [selectedDate]);
+        if(isFocused){
+            loadMainData();
+        }
+    }, [isFocused, selectedDate]);
 
     const loadMainData = async () => {
         setLoading(true);
@@ -53,9 +59,7 @@ export default function MainScreen(){
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={styles.scrollContent}>
                 <TouchableOpacity onPress={() => router.push('../weightInput')}>
-                    <WeightStatusCard 
-                        weight={mainData?.currentWeight}
-                    />
+                    <WeightStatusCard weight={mainData?.currentWeight}/>
                 </TouchableOpacity>
                 <FastingTimer />
                 {/* 섹션 타이틀을 하나 넣어주면 더 깔끔합니다 */}

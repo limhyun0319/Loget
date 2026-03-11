@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, Pressable, Alert, Keyboard } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { ScrollView, View, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, Pressable, Alert, Keyboard } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useAuth } from '@/context/AuthContext';
 import { getWeightRecord, postWeightRecord } from '@/api/main';
+import { useDate } from '@/context/DateContext';
 
 const MAIN_COLOR = '#36bc9b'; // 로겟의 새로운 시그니처 컬러!
 
@@ -12,12 +13,44 @@ export default function WeightInputScreen() {
   const router = useRouter();
   const { user } = useAuth();
   const [weight, setWeight] = useState('');
-  const [selectedDate, setSelectedDate] = useState(new Date()); // 선택된 날짜 관리
+
+  const {selectedDate, setSelectedDate} = useDate(); // 선택된 날짜 관리
   const [isExistingRecord, setIsExistingRecord] = useState(false);
+
+  const scrollViewRef = useRef<ScrollView>(null);
+  const ITEM_WIDTH = 60; // dateItem 너비(50) + gap(10)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      scrollViewRef.current?.scrollTo({
+        x: 14 * ITEM_WIDTH - 150, 
+        animated: false,
+      });
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
   
   useEffect(() => {
     loadWeightData();
   }, [selectedDate]);
+
+  const getExtendedDays = () => {
+    const days = [];
+    // 기준일로부터 -14일부터 +14일까지 생성
+    for (let i = -14; i <= 14; i++) {
+      const date = new Date(selectedDate);
+      date.setDate(selectedDate.getDate() + i);
+      days.push({
+        fullDate: date,
+        dayName: date.toLocaleDateString('ko-KR', { weekday: 'short' }),
+        dateNum: date.getDate(),
+        isToday: date.toDateString() === new Date().toDateString(),
+      });
+    }
+    return days;
+  };
+
+  const extendedDays = getExtendedDays();
 
   const loadWeightData = async () => {
     try {
@@ -63,30 +96,6 @@ export default function WeightInputScreen() {
     }
   };
 
-  // 이번 주의 월요일을 구해서 7일간의 날짜 리스트 생성
-  const getWeekDays = () => {
-    const now = new Date();
-    const day = now.getDay(); // 0(일) ~ 6(토)
-    const diff = now.getDate() - day + (day === 0 ? -6 : 1); // 월요일로 맞추기
-    
-    const monday = new Date(now.setDate(diff));
-    const days = [];
-
-    for (let i = 0; i < 7; i++) {
-      const date = new Date(monday);
-      date.setDate(monday.getDate() + i);
-      days.push({
-        fullDate: date,
-        dayName: date.toLocaleDateString('ko-KR', { weekday: 'short' }),
-        dateNum: date.getDate(),
-        isToday: date.toDateString() === new Date().toDateString(),
-      });
-    }
-    return days;
-  };
-
-  const weekDays = getWeekDays();
-
   return (
   <SafeAreaView style={styles.safeArea}>
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -101,21 +110,29 @@ export default function WeightInputScreen() {
         </View>
 
         {/* 주간 달력 */}
-        <View style={styles.headerContainer}>
-          {weekDays.map((item, index) => {
-            const isSelected = item.fullDate.toDateString() === selectedDate.toDateString();
-            return (
-              <Pressable 
-                key={index} 
-                style={[styles.dateItem, isSelected && styles.selectedItem]}
-                onPress={() => setSelectedDate(item.fullDate)}
-              >
-                <Text style={[styles.dayText, isSelected && styles.selectedText]}>{item.dayName}</Text>
-                <Text style={[styles.dateText, isSelected && styles.selectedText]}>{item.dateNum}</Text>
-                {item.isToday && !isSelected && <View style={styles.todayDot} />}
-              </Pressable>
-            );
-          })}
+        <View style={{ backgroundColor: '#f9f9f9' }}>
+          <ScrollView 
+              horizontal 
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.scrollContainer}
+              ref={scrollViewRef}
+              decelerationRate="fast"
+          >
+            {extendedDays.map((item, index) => {
+              const isSelected = item.fullDate.toDateString() === selectedDate.toDateString();
+              return (
+                <Pressable 
+                  key={index} 
+                  style={[styles.dateItem, isSelected && styles.selectedItem]}
+                  onPress={() => setSelectedDate(item.fullDate)}
+                >
+                  <Text style={[styles.dayText, isSelected && styles.selectedText]}>{item.dayName}</Text>
+                  <Text style={[styles.dateText, isSelected && styles.selectedText]}>{item.dateNum}</Text>
+                  {item.isToday && !isSelected && <View style={styles.todayDot} />}
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
 
         {/* 몸무게 입력 */}
@@ -176,10 +193,16 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     backgroundColor: '#f9f9f9',
   },
+  scrollContainer: {
+    paddingHorizontal: 15,
+    paddingVertical: 15,
+    flexDirection: 'row',
+    gap: 10, // 날짜 아이템 사이 간격
+  },
   dateItem: { 
     alignItems: 'center', 
     justifyContent: 'center',
-    width: 45, 
+    width: 50, 
     height: 60, 
     borderRadius: 15 
   },
