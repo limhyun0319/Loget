@@ -1,9 +1,11 @@
 import React, { createContext, useState, useContext } from 'react';
+import { useRouter } from 'expo-router';
 
 // 1. 바구니에 담길 내용의 타입을 정의합니다.
 interface AuthContextType {
     user: any;
     setUser: (user: any) => void;
+    logout: () => void;
 }
 
 // 2. 실제 바구니(Context)를 생성합니다.
@@ -12,9 +14,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 // 3. 앱 전체에 바구니를 씌워주는 '공급자(Provider)'를 만듭니다.
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const [user, setUser] = useState(null); // 전역 유저 상태
+    const router = useRouter();
+
+    const logout = () => {
+        setUser(null);
+        router.replace('/'); 
+    };
 
     return (
-        <AuthContext.Provider value={{ user, setUser }}>
+        <AuthContext.Provider value={{ user, setUser, logout }}>
             {children}
         </AuthContext.Provider>
     );

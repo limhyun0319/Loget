@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { styles } from './styles';
 import { useAuth } from '@/context/AuthContext';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 export default function MainHeader({selectedDate, onDateChange}) {
-  console.log("헤더에 들어온 날짜:", selectedDate);
+  const router = useRouter();
 
   const { user } = useAuth(); // 전역 바구니에서 유저 정보 꺼내기
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -22,10 +24,17 @@ export default function MainHeader({selectedDate, onDateChange}) {
 
   return (
     <View style={styles.header}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.userName}>{user?.name || '사용자'}님,</Text>
+      <TouchableOpacity 
+        style={styles.titleContainer} 
+        onPress={() => router.push('/settings')} // 설정 페이지 경로
+        activeOpacity={0.6}
+      >
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={styles.userName}>{user?.name || '사용자'}님</Text>
+          <Ionicons name="chevron-forward" size={16} color="#fff" style={{ marginTop: 8, marginLeft: 2 }} />
+        </View>
         <Text style={styles.subtitle}>왔으면 기록해라</Text>
-      </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={showDatePicker} activeOpacity={0.7}>
         <Text style={[styles.dateText, { color: '#fff', fontWeight: 'bold' }]}>
           {displayDate} ▾

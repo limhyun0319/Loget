@@ -17,8 +17,8 @@ export const Colors = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
     // 🔥 Loget 전용 색상 추가
-    primary: '#151718',   // 팀 NH 갈색
-    secondary: '#85b52a', // 팀 NH 연두색
+    primary: '#36bc9b',   
+    secondary: '#85b52a',
     inputBg: '#F5F7F6',
     border: '#E8E8E8',
   },
